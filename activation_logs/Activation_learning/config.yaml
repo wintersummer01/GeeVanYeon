@@ -1,0 +1,29 @@
+
+batch_size: 4
+clip_max_norm: 1.0
+config: activation_configs/config.yaml
+dataset_root: nonlinear.csv
+epochs: 5000
+experiment_name: Activation_learning
+gpu: 0
+gpu_ids:
+- '0'
+- '1'
+- '2'
+- '3'
+hidden_dim: 3
+initial_epoch: 0
+learning_rate: 0.0001
+log_dir: activation_logs/
+loss_type: mse
+model_class: AFMM
+model_params:
+  hidden_dim: 3
+  num_layers: 5
+num_layers: 5
+num_workers: 16
+pretrain_ckpt: 'null'
+save_every: 1000
+save_model: true
+seed: 1030
+shutup: false

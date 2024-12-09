@@ -1,0 +1,30 @@
+experiment_name: Activation_learning
+
+# Model
+model_class: AFMM
+hidden_dim: 3
+num_layers: 4
+
+# Training
+loss_type: mse
+initial_epoch: 0
+epochs: 700
+learning_rate: 1.0e-2
+lr_milestone_epoch: [100, 190, 270, 340, 400, 450, 500, 550, 600, 650]
+clip_max_norm: 0.0
+shutup: False
+
+# Dataset
+dataset_root: 'nonlinear.csv'
+num_workers: 16
+batch_size: 8
+
+# logging
+log_dir: activation_logs/
+save_model: True
+save_every: 1000
+pretrain_ckpt: null
+
+# Environments
+seed: 1030
+gpu_ids: ["0", "1", "2", "3"]

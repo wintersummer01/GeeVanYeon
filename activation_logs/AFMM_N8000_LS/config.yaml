@@ -1,0 +1,43 @@
+batch_size: 8
+clip_max_norm: 0.0
+config: activation_config.yaml
+dataset_root: nonlinear.csv
+epochs: 700
+experiment_name: AFMM_N8000_LS
+gpu: 0
+gpu_ids:
+- '0'
+- '1'
+- '2'
+- '3'
+hidden_dim: 3
+initial_epoch: 0
+learning_rate: 0.01
+log_N: 0.125
+log_dir: activation_logs/
+logscale: true
+loss_type: mse
+lr_milestone_epoch:
+- '100'
+- '190'
+- '270'
+- '340'
+- '400'
+- '450'
+- '500'
+- '550'
+- '600'
+- '650'
+model_class: AFMM
+model_params:
+  hidden_dim: 3
+  num_layers: 4
+norm: 787400000000.0
+num_layers: 4
+num_workers: 16
+plot: false
+pretrain_ckpt: 'null'
+save_every: 1000
+save_model: true
+seed: 1030
+shutup: false
