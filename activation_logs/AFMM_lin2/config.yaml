@@ -1,0 +1,44 @@
+batch_size: 8
+clip_max_norm: 0.0
+config: activation_config2.yaml
+dataset_root: nonlinear2.csv
+epochs: 10000
+experiment_name: AFMM_lin2
+gpu: 0
+gpu_ids:
+- '0'
+- '1'
+- '2'
+- '3'
+hidden_dim: 4
+initial_epoch: 0
+initializer: 0.04
+learning_rate: 0.01
+log_N: null
+log_dir: activation_logs/
+logscale: false
+loss_type: mse
+lr_milestone_epoch:
+- '1000'
+- '2000'
+- '3000'
+- '4000'
+- '5000'
+- '6000'
+- '7000'
+- '8000'
+model_class: AFMM
+model_params:
+  hidden_dim: 4
+  initializer: 0.04
+  num_layers: 6
+moveX: 27.0
+norm: 100000.0
+num_layers: 6
+num_workers: 16
+plot: false
+pretrain_ckpt: 'null'
+save_every: 1000
+save_model: true
+seed: 1030
+shutup: false

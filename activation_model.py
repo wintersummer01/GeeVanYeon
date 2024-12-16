@@ -5,11 +5,11 @@ import torch.nn.functional as F
 __all__ = ['AFMM']
 
 class middleLayer(nn.Module):
-    def __init__(self, in_dim, out_dim):
+    def __init__(self, in_dim, out_dim, initializer):
         super().__init__()
-        H_hat_init = torch.ones([1, out_dim, in_dim], device='cuda')*0.1
-        b_init = torch.zeros([1, out_dim, 1], device='cuda')*0.1
-        a_hat_init = torch.zeros([1, out_dim, 1], device='cuda')*0.1
+        H_hat_init = torch.ones([1, out_dim, in_dim], device='cuda')*initializer
+        b_init = torch.zeros([1, out_dim, 1], device='cuda')
+        a_hat_init = torch.ones([1, out_dim, 1], device='cuda')*initializer
         
         self.H_hat = nn.Parameter(H_hat_init)
         self.b = nn.Parameter(b_init)
@@ -26,10 +26,10 @@ class middleLayer(nn.Module):
         
 
 class finalLayer(nn.Module):
-    def __init__(self, in_dim, out_dim):
+    def __init__(self, in_dim, out_dim, initializer):
         super().__init__()
-        H_hat_init = torch.ones([1, out_dim, in_dim], device='cuda')*0.1
-        b_init = torch.zeros([1, out_dim, 1], device='cuda')*0.1
+        H_hat_init = torch.ones([1, out_dim, in_dim], device='cuda')*initializer
+        b_init = torch.zeros([1, out_dim, 1], device='cuda')
         
         self.H_hat = nn.Parameter(H_hat_init)
         self.b = nn.Parameter(b_init)
@@ -44,13 +44,13 @@ class finalLayer(nn.Module):
 
 # AFMM : Activation Function Mimicing Model
 class AFMM(nn.Module):
-    def __init__(self, hidden_dim, num_layers):
+    def __init__(self, hidden_dim, num_layers, initializer):
         super().__init__()
         layers = []
         if num_layers > 1:
-            layers += [middleLayer(1, hidden_dim)]
-            layers += [middleLayer(hidden_dim, hidden_dim)] * (num_layers - 2)
-        layers += [finalLayer(hidden_dim, 1)]
+            layers += [middleLayer(1, hidden_dim, initializer=initializer)]
+            layers += [middleLayer(hidden_dim, hidden_dim, initializer=initializer)] * (num_layers - 2)
+        layers += [finalLayer(hidden_dim, 1, initializer=initializer)]
         self.layers = nn.Sequential(*layers)
         
     def forward(self, x):

@@ -12,6 +12,7 @@ from activation_dataset import loadActivationCsv
 # python activation_valid.py plotResult_withX --test_name result --exps Activation_learning 
 # python activation_valid.py plotResult_withX --test_name result --exps AFMM_N8000_LS 
 # python activation_valid.py plotResult_withX --test_name result --exps AFMM_N8000
+# python activation_valid.py plotResult_withX --test_name result2 --exps AFMM_lin2 --data_root nonlinear2.csv
 def plotResult_withX(test_name, exps, root, **kwargs):
     model = loadModel(exps[0])
     with open(f"activation_logs/{exps[0]}/config.yaml", 'r') as f:
@@ -20,13 +21,14 @@ def plotResult_withX(test_name, exps, root, **kwargs):
     x, y = loadActivationCsv(root=root,
                              N=config_dict['norm'],
                              logscale=config_dict['logscale'],
-                             log_N=config_dict['log_N'])
+                             log_N=config_dict['log_N'],
+                             moveX=config_dict['moveX'])
     
     Ys = []
     for val in x:
         val = torch.Tensor([val]).unsqueeze(-1).cuda()
         y_temp = model(val)
-        print(y_temp.shape)
+        # print(y_temp.shape)
         Ys.append(y_temp[0][0][0].item())
         
     SE = []

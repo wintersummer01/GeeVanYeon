@@ -77,6 +77,7 @@ def parse_args(argv):
     parser.add_argument('--model_class', type=str, help='Model class')
     parser.add_argument('--hidden_dim', type=int, help='calculation dimension of coder')
     parser.add_argument('--num_layers', type=int, help='output dimension of coder')
+    parser.add_argument('--initializer', type=float, help='initial value of the model')
     
     # Training
     parser.add_argument('--loss_type', type=str, default='mse', help='Type of loss')
@@ -92,6 +93,7 @@ def parse_args(argv):
     parser.add_argument('--norm', type=float)
     parser.add_argument('--logscale', action="store_true")
     parser.add_argument('--log_N', type=float)
+    parser.add_argument('--moveX', type=float)
     parser.add_argument('--dataset_root', type=str)
     parser.add_argument('--num_workers', type=int, default=8)
     parser.add_argument('--batch_size', type=int, default=8)
@@ -151,18 +153,21 @@ def main(argv):
         norm=       args.norm,
         logscale=   args.logscale,
         log_N=      args.log_N,
+        moveX=      args.moveX,
         shuffle=    True,
     )
     raw_data = loadActivationCsv(root=   args.dataset_root,
                                  N=       args.norm,
                                  logscale=   args.logscale,
-                                 log_N=      args.log_N
+                                 log_N=      args.log_N,
+                                 moveX=      args.moveX,
     )
     
     # Model
     args.model_params = {
         'hidden_dim': args.hidden_dim,
-        'num_layers': args.num_layers
+        'num_layers': args.num_layers,
+        'initializer': args.initializer,
     }
     model = globals()[args.model_class](**args.model_params)
     model = model.cuda(local_gpu_id)
